@@ -1,9 +1,9 @@
 extends Control
 
-onready var event_manager = $EventManager
-onready var title_label = $VBoxContainer/Title
-onready var description_label = $VBoxContainer/Description
-onready var choices_container = $VBoxContainer/ChoicesContainer
+@onready var event_manager = $EventManager
+@onready var title_label = $VBoxContainer/Title
+@onready var description_label = $VBoxContainer/Description
+@onready var choices_container = $VBoxContainer/ChoicesContainer
 onready var result_label = $VBoxContainer/ResultLabel
 
 var mock_game_state = null

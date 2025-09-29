@@ -1,27 +1,27 @@
 extends Resource
 class_name EventOutcome
 
-export var outcome_description: String
-export var base_probability: float = 0.5  # 0.0 to 1.0
+@export var outcome_description: String
+@export var base_probability: float = 0.5  # 0.0 to 1.0
 
 # Modifiers
-export var reputation_modifier: float = 0.0  # -0.2 to +0.2
-export var skill_check: String = ""  # e.g., "negotiation", "charm"
-export var skill_check_bonus: float = 0.0
+@export var reputation_modifier: float = 0.0  # -0.2 to +0.2
+@export var skill_check: String = ""  # e.g., "negotiation", "charm"
+@export var skill_check_bonus: float = 0.0
 
 # Immediate effects
-export var money_change: int = 0
-export var reputation_change: float = 0.0
-export var client_satisfaction_change: float = 0.0
+@export var money_change: int = 0
+@export var reputation_change: float = 0.0
+@export var client_satisfaction_change: float = 0.0
 
 # Relationship changes (dictionary of npc_id: change_value)
 var relationship_changes: Dictionary = {}
 
 # Delayed effects
-export var trigger_events: Array = []  # Array of event_ids to trigger later
-export var unlock_opportunities: Array = []
-export var add_flags: Array = []
-export var remove_flags: Array = []
+@export var trigger_events: Array = []  # Array of event_ids to trigger later
+@export var unlock_opportunities: Array = []
+@export var add_flags: Array = []
+@export var remove_flags: Array = []
 
 func calculate_probability(game_state) -> float:
 	var prob = base_probability

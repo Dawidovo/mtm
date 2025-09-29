@@ -2,23 +2,23 @@ extends Resource
 class_name BaseEvent
 
 # Core event data
-export var event_id: String
-export var event_type: String  # party, scandal, business, industry, crisis
-export var title: String
-export var description: String
+@export var event_id: String
+@export var event_type: String  # party, scandal, business, industry, crisis
+@export var title: String
+@export var description: String
 
 # Trigger conditions
-export var min_year: int = 1950
-export var max_year: int = 2030
-export var min_reputation: float = 0.0
-export var max_reputation: float = 100.0
-export var min_clients: int = 0
-export var required_flags: Array = []
+@export var min_year: int = 1950
+@export var max_year: int = 2030
+@export var min_reputation: float = 0.0
+@export var max_reputation: float = 100.0
+@export var min_clients: int = 0
+@export var required_flags: Array = []
 
 # Event weight for random selection
-export var probability_weight: float = 1.0
-export var can_repeat: bool = false
-export var cooldown_months: int = 0
+@export var probability_weight: float = 1.0
+@export var can_repeat: bool = false
+@export var cooldown_months: int = 0
 
 # Available choices
 var choices: Array = []  # Array of EventChoice
