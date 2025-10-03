@@ -56,7 +56,7 @@ func process_monthly_events() -> void:
 	
 	var eligible_events = _get_eligible_events()
 	
-	if eligible_events.empty():
+	if eligible_events.is_empty():
 		print("No eligible events available")
 		return
 	
@@ -91,7 +91,7 @@ func _get_eligible_events() -> Array:
 	return eligible
 
 func _weighted_random_selection(events: Array) -> BaseEvent:
-	if events.empty():
+	if events.is_empty():
 		return null
 	
 	var total_weight = 0.0

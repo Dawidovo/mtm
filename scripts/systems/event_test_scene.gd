@@ -4,7 +4,7 @@ extends Control
 @onready var title_label = $VBoxContainer/Title
 @onready var description_label = $VBoxContainer/Description
 @onready var choices_container = $VBoxContainer/ChoicesContainer
-onready var result_label = $VBoxContainer/ResultLabel
+@onready var result_label = $VBoxContainer/ResultLabel
 
 var mock_game_state = null
 
@@ -13,8 +13,8 @@ func _ready():
 	event_manager.initialize(mock_game_state)
 	
 	# Connect signals
-	event_manager.connect("event_triggered", self, "_on_event_triggered")
-	event_manager.connect("event_completed", self, "_on_event_completed")
+	event_manager.connect("event_triggered", _on_event_triggered)
+	event_manager.connect("event_completed", _on_event_completed)
 	
 	# Debug: list all events
 	event_manager.debug_list_events()
@@ -56,7 +56,7 @@ func _create_mock_game_state():
 	}
 	
 	# Helper methods for game state
-	mock_game_state.get_project_by_id = funcref(self, "_mock_get_project")
+	mock_game_state.get_project_by_id = func(project_id): return _mock_get_project(project_id)
 
 func _mock_get_project(project_id):
 	return {
@@ -79,12 +79,12 @@ func _on_event_triggered(event):
 		var choice = choices[i]
 		var button = Button.new()
 		button.text = "%s\n%s" % [choice.label, choice.description]
-		button.connect("pressed", self, "_on_choice_selected", [i])
+		button.pressed.connect(_on_choice_selected.bind(i))
 		
 		# Disable if not available
 		if not event_manager.is_choice_available(i):
 			button.disabled = true
-			button.hint_tooltip = event_manager.get_choice_unavailable_reason(i)
+			button.tooltip_text = event_manager.get_choice_unavailable_reason(i)
 		
 		choices_container.add_child(button)
 	

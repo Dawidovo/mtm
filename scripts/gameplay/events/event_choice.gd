@@ -1,14 +1,14 @@
 extends Resource
 class_name EventChoice
 
-export var choice_id: String
-export var label: String
-export var description: String
+@export var choice_id: String
+@export var label: String
+@export var description: String
 
 # Requirements to show this choice
-export var required_money: int = 0
-export var required_reputation: float = 0.0
-export var required_skills: Dictionary = {}
+@export var required_money: int = 0
+@export var required_reputation: float = 0.0
+@export var required_skills: Dictionary = {}
 
 # Possible outcomes
 var outcomes: Array = []  # Array of EventOutcome
