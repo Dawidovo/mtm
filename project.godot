@@ -11,6 +11,6 @@ config_version=5
 [application]
 
 config/name="MTM"
-run/main_scene="uid://xni77usuornr"
+run/main_scene="uid://t4cmjkobtmm6"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
