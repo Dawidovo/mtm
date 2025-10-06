@@ -16,7 +16,7 @@ func _init():
 	initialize()
 
 func can_trigger(game_state) -> bool:
-	if not .can_trigger(game_state):
+	if not super.can_trigger(game_state):
 		return false
 	
 	# Only trigger during awards season (January-March)
