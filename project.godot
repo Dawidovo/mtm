@@ -14,3 +14,22 @@ config/name="MTM"
 run/main_scene="uid://t4cmjkobtmm6"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/resizable=true
+window/size/window_width_override=1280
+window/size/window_height_override=720
+
+# Stretch Mode für UI-Skalierung
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/stretch/scale=1.0
+
+[gui]
+
+# UI-Skalierung für verschiedene DPI
+theme/custom_font/size=16
+theme/default_font_antialiasing=1
