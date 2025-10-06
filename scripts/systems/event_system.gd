@@ -10,7 +10,7 @@ signal choice_selected(choice)
 var available_events: Dictionary = {}
 
 # Active event tracking
-var current_event: BaseEvent = null
+var current_event = null
 var event_history: Array = []
 var event_cooldowns: Dictionary = {}
 
@@ -18,31 +18,40 @@ var event_cooldowns: Dictionary = {}
 var game_state = null
 
 func _ready():
-	randomize()
-	_register_all_events()
+	pass  # Don't call _register_all_events here in Godot 4
 
 func initialize(game_state_ref):
 	game_state = game_state_ref
-	print("EventManager initialized")
+	_register_all_events()  # Register events AFTER game_state is set
+	print("EventManager initialized with %d events" % available_events.size())
 
 func _register_all_events():
-	# Register all party events
-	_register_event(PremiereEscalationEvent.new())
-	_register_event(WeinsteinDinnerEvent.new())
-	_register_event(VegasWeddingEvent.new())
-	_register_event(AfterShowPartyEvent.new())
-	_register_event(VillaPartyEvent.new())
+	# Load and register events dynamically to avoid parser errors
+	# Only register events that exist and can be instantiated
 	
-	# Add more events as you create them
-	# _register_event(DrugBustEvent.new())
-	# _register_event(SexTapeLeakEvent.new())
-	# etc.
+	var event_files = [
+		"res://scripts/gameplay/events/party_events/aftershow_party.gd",
+		"res://scripts/gameplay/events/party_events/premiere_escalation.gd",
+		"res://scripts/gameplay/events/party_events/vegas_wedding.gd",
+		"res://scripts/gameplay/events/party_events/villa_party.gd",
+		"res://scripts/gameplay/events/party_events/weinstein_dinner.gd"
+	]
 	
-	print("Registered %d events" % available_events.size())
+	for event_path in event_files:
+		if ResourceLoader.exists(event_path):
+			var event_script = load(event_path)
+			if event_script:
+				var event_instance = event_script.new()
+				_register_event(event_instance)
+		else:
+			push_warning("Event file not found: %s" % event_path)
 
-func _register_event(event: BaseEvent):
-	available_events[event.event_id] = event
-	print("Registered event: %s" % event.event_id)
+func _register_event(event):
+	if event and event.has_method("initialize"):
+		available_events[event.event_id] = event
+		print("Registered event: %s" % event.event_id)
+	else:
+		push_error("Invalid event object or missing initialize method")
 
 # Called each game month to potentially trigger random events
 func process_monthly_events() -> void:
@@ -90,7 +99,7 @@ func _get_eligible_events() -> Array:
 	
 	return eligible
 
-func _weighted_random_selection(events: Array) -> BaseEvent:
+func _weighted_random_selection(events: Array):
 	if events.is_empty():
 		return null
 	
@@ -222,7 +231,8 @@ func debug_force_event(event_id: String) -> void:
 		push_error("Event not found: %s" % event_id)
 		return
 	
-	current_event = available_events[event_id].trigger_event(game_state)
+	var event = available_events[event_id]
+	current_event = event.trigger_event(game_state)
 	emit_signal("event_triggered", current_event)
 	print("DEBUG: Forced event %s" % event_id)
 
@@ -240,6 +250,7 @@ func reset():
 	current_event = null
 	event_history.clear()
 	event_cooldowns.clear()
+	available_events.clear()
 	print("EventManager reset")
 
 # Save/Load support
