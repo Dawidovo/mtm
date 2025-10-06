@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://xni77usuornr"]
+
+[ext_resource type="Script" uid="uid://ctvmlwo7fm7rl" path="res://scripts/core/game_manager.gd" id="1_328il"]
+[ext_resource type="Script" uid="uid://bk545jcq2rtyf" path="res://scripts/systems/event_system.gd" id="2_j2kif"]
+
+[node name="EventTestScene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_328il")
+
+[node name="EventManager" type="Node" parent="."]
+script = ExtResource("2_j2kif")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 1, 0.00392157)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
